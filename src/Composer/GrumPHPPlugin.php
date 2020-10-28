@@ -9,8 +9,8 @@ use Composer\DependencyResolver\Operation\InstallOperation;
 use Composer\DependencyResolver\Operation\UninstallOperation;
 use Composer\DependencyResolver\Operation\UpdateOperation;
 use Composer\EventDispatcher\EventSubscriberInterface;
-use Composer\Installer\PackageEvents;
 use Composer\Installer\PackageEvent;
+use Composer\Installer\PackageEvents;
 use Composer\IO\IOInterface;
 use Composer\Package\PackageInterface;
 use Composer\Plugin\PluginInterface;
@@ -173,7 +173,7 @@ class GrumPHPPlugin implements PluginInterface, EventSubscriberInterface
 
         // Check executable which is running:
         if ($this->io->isVeryVerbose()) {
-            $this->io->write('Running process : '.$process->getCommandLine());
+            $this->io->write('Running process : ' . $process->getCommandLine());
         }
 
         $process->run();
@@ -181,11 +181,37 @@ class GrumPHPPlugin implements PluginInterface, EventSubscriberInterface
             $this->io->write(
                 '<fg=red>GrumPHP can not sniff your commits. Did you specify the correct git-dir?</fg=red>'
             );
-            $this->io->write('<fg=red>'.$process->getErrorOutput().'</fg=red>');
+            $this->io->write('<fg=red>' . $process->getErrorOutput() . '</fg=red>');
 
             return;
         }
 
-        $this->io->write('<fg=yellow>'.$process->getOutput().'</fg=yellow>');
+        $this->io->write('<fg=yellow>' . $process->getOutput() . '</fg=yellow>');
+    }
+
+    /**
+     * Remove any hooks from Composer
+     *
+     * This will be called when a plugin is deactivated before being
+     * uninstalled, but also before it gets upgraded to a new version
+     * so the old one can be deactivated and the new one activated.
+     *
+     * @param Composer $composer
+     * @param IOInterface $io
+     */
+    public function deactivate(Composer $composer, IOInterface $io)
+    {
+    }
+
+    /**
+     * Prepare the plugin to be uninstalled
+     *
+     * This will be called after deactivate.
+     *
+     * @param Composer $composer
+     * @param IOInterface $io
+     */
+    public function uninstall(Composer $composer, IOInterface $io)
+    {
     }
 }
