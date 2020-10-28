@@ -16,7 +16,7 @@
     "require": {
         "php": "^7.1",
         "ext-json": "*",
-        "composer-plugin-api": "~1.0",
+        "composer-plugin-api": "~1.0 || ~2.0",
         "doctrine/collections": "~1.2",
         "gitonomy/gitlib": "^1.0.3",
         "monolog/monolog": "~1.16 || ^2.0",
